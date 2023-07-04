@@ -1,6 +1,6 @@
-# ddu-fully_understand
+# ddu-fully_understand.vim
 
-I fully understand ddu.vim.
+I """fully""" understand ddu.vim.
 
 # Required
 
