@@ -17,9 +17,14 @@ type ActionData = {
 export class Kind extends BaseKind<Params> {
   override actions: Actions<Params> = {
     open: async (args: { denops: Denops, items: DduItem[] }) => {
-        await args.denops.cmd("enew");
+        const bufnr = await fn.bufadd(args.denops, "fully_understand")
+        await fn.bufload(args.denops,bufnr)
+        await fn.setbufvar(args.denops, bufnr, "&bufhidden", "hide")
+        await fn.setbufvar(args.denops, bufnr, "&buftype", "nofile")
+        await fn.setbufvar(args.denops, bufnr, "&buflisted", 1)
+        await args.denops.cmd("buffer " + bufnr)
         for (const i of args.items ){
-            await fn.setline(args.denops, 1, (i.action as ActionData).text)
+            await fn.setbufline(args.denops, bufnr, 1, (i.action as ActionData).text)
         }
         return ActionFlags.None;
     },
